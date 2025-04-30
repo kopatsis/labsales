@@ -1,109 +1,106 @@
-Sales Data Integration & Reporting System
-Overview
-This system is a high-performance, locally hosted analytics and reporting solution designed to ingest, normalize, store, and report on detailed sales and customer data. At its core is a PostgreSQL database that consolidates transactional data from multiple e-commerce channels and ad hoc data sources.
+# Sales Data Integration & Reporting System
+
+## Overview
+
+This system is a locally hosted analytics and reporting solution designed to ingest, normalize, store, and report on detailed sales and customer data. It was created by me for my employer, LA Balloons. At its core is a PostgreSQL database that consolidates transactional data from multiple e-commerce channels and ad hoc data sources.
 
 Developed for operational and compliance needs, this system ensures accurate, timely, and structured financial insights, with reporting tailored to internal analytics, strategic planning, and external tax documentation.
 
-System Architecture
-Data Sources
-Shopify
+---
 
-One primary storefront
+## System Architecture
 
-One ancillary storefront
+### Data Sources
 
-WordPress (WooCommerce)
+- **Shopify**
+  - One primary storefront  
+  - One ancillary storefront  
 
-Three separate ancillary sites
+- **WordPress (WooCommerce)**
+  - Three separate ancillary sites  
 
-CSV Import
+- **CSV Import**
+  - Bulk upload capability for historical or supplemental datasets  
 
-Bulk upload capability for historical or supplemental datasets
+### Data Ingestion
 
-Data Ingestion
 A Go-based application manages all data acquisition and integration processes. This application:
 
-Interfaces directly with platform APIs or ingests structured CSVs
+- Interfaces directly with platform APIs or ingests structured CSVs
+- Extracts and harmonizes multi-channel data
+- Performs conditional insert and update logic to ensure database consistency
+- Uses GORM for ORM-level interaction with PostgreSQL
 
-Extracts and harmonizes multi-channel data
+---
 
-Performs conditional insert and update logic to ensure database consistency
+## Data Model
 
-Uses GORM for ORM-level interaction with PostgreSQL
-
-Data Model
 The PostgreSQL schema is designed to support a comprehensive sales dataset, including but not limited to:
 
-Order-Level Data
+- **Order-Level Data**
+  - Subtotals, shipping, taxes, tips, total discounts
+  - Order timestamps and metadata
+  - Transactions occurring for the order
+- **Line-Item Details**
+  - SKU, product ID, quantity, unit price, item-level discounts
+- **Customer Information**
+  - Contact and shipping information
+  - Account type segmentation (e.g., wholesale vs. retail vs. marketplace)
 
-Subtotals, shipping, taxes, tips, total discounts
+---
 
-Order timestamps and metadata
+## Reporting Capabilities
 
-Line-Item Details
+All reports are generated in Excel (`.xlsx`) format using the Excelize library. Data extraction and transformation is executed via hundreds of structured queries orchestrated by Go code. Report generation includes dynamic formatting and embedded data visualization where applicable.
 
-SKU, product ID, quantity, unit price, item-level discounts
+### Monthly Reports (Rolling Year)
 
-Customer Information
+- Segmented by customer type: with the following levels
+  - Normal retail customers
+  - Nonprofit customers (special discount)
+  - Wholesale customers
+  - High spending (Level1A) customers
+  - Marketplace (Amazon, Etsy, and Walmart) sales channel customers
+  - Wordpress/Woocommerce site customers
+- Metrics include:
+  - Monthly and trailing 12-month sales totals
+  - Order volumes
+  - Average sales per order
+  - Year-to-date aggregates
+  - Four-year month-over-month historical comparison
+- Includes top-performing wholesale customers with individualized reporting
 
-Contact and shipping information
+### Quarterly Tax Report
 
-Account type segmentation (e.g., wholesale vs. retail)
+- Daily aggregates by line item:
+  - Subtotals, discounts, shipping, tips, taxes
+- Quarterly roll-up summaries
+- Optimized format for direct use tax filings
 
-Reporting Capabilities
-All reports are generated in Excel (.xlsx) format using the Excelize library. Data extraction and transformation is executed via hundreds of structured queries orchestrated by Go code. Report generation includes dynamic formatting and embedded data visualization where applicable.
+### Ad Hoc Wholesale Customer Reports
 
-Monthly Reports (Rolling Year)
-Segmented by customer type
+- Generated immediately upon customer request (most often in Q1)
+- Customer-specific previous year summaries of:
+  - Total sales
+  - Tax paid
+  - Discounts received
+  - Shipping fees
+- Designed to support downstream tax and financial reporting at the customer organization level
 
-Metrics include:
+---
 
-Monthly and trailing 12-month sales totals
+## Deployment & Execution
 
-Order volumes
+This application is designed for **local execution** due to the high volume and sensitivity of data involved.
 
-Average sales per order
+- CLI interface for manual operation and report generation
+- Optional scheduled execution via Go-native scheduling routines
+- Hosted on secure, on-premises infrastructure
 
-Year-to-date aggregates
+---
 
-Four-year month-over-month historical comparison
+## Code Availability
 
-Includes top-performing wholesale customers with individualized reporting
-
-Quarterly Tax Report
-Daily aggregates by line item:
-
-Subtotals, discounts, shipping, tips, taxes
-
-Quarterly roll-up summaries
-
-Optimized format for direct inclusion in accounting systems or tax filings
-
-Ad Hoc Wholesale Customer Reports
-Generated on request (typically Q1)
-
-Customer-specific summaries of:
-
-Total sales
-
-Tax paid
-
-Discounts received
-
-Shipping fees
-
-Designed to support downstream tax and financial reporting at the customer organization level
-
-Deployment & Execution
-This application is designed for local execution due to the high volume and sensitivity of data involved.
-
-CLI interface for manual operation and report generation
-
-Optional scheduled execution via Go-native scheduling routines
-
-Hosted on secure, on-premises infrastructure
-
-Code Availability
-This repository serves as documentation and deployment metadata only. Application code is proprietary and not available in this repository.
+This repository serves as documentation and deployment metadata only. **Application code is proprietary and not available in this repository**.
 
 For further information or to request access (where permissible), please contact the repository administrator.

@@ -104,3 +104,22 @@ This application is designed for **local execution** due to the high volume and 
 This repository serves as documentation and deployment metadata only. **Application code is proprietary and not available in this repository**.
 
 For further information or to request access (where permissible), please contact the repository administrator.
+
+---
+
+## Related Internal Tools
+
+While not directly used in this project, the following internally developed tools may be of interest. Each is designed to solve specific operational challenges encountered in data processing, content generation, and automation workflows.
+
+- [**excelpics**](https://github.com/kopatsis/excelpics)  
+  A Go-based CLI tool that processes Excel files and inserts images (from URLs or file paths) into designated cells using Excelize. It handles a wide range of formats and avoids common limitations of Excel’s built-in `IMAGE()` function, such as persistent refetching and file incompatibilities.
+
+- [**imageoverlay**](https://github.com/kopatsis/imageoverlay)  
+  Lightweight Go utility to programmatically overlay one image atop another. Primarily used for bulk visual asset generation (e.g., adding “BULK” or “COMPONENT” banners) without requiring Photoshop or manual input.
+
+- [**qrcode-gen**](https://github.com/kopatsis/qrcode-gen)  
+  Go application that reads a CSV of names and URLs, then generates stylized QR codes for each entry. It outputs named image files, enabling high-volume QR code creation with zero manual intervention.
+
+- [**amazonscrape**](https://github.com/kopatsis/amazonscrape)  
+  Python tool using Selenium to retrieve listing information from Amazon based on provided ASINs. It gathers data such as featured seller, rating, price, and shipping cost, then compiles it into a CSV. Designed to avoid reliance on costly APIs while maintaining scraping compliance through throttled access patterns.
+
